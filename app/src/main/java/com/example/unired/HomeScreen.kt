@@ -65,7 +65,10 @@ fun HomeScreen(onLogout: () -> Unit) {
         Spacer(modifier = Modifier.height(36.dp))
 
         Button(
-            onClick = onLogout,
+            onClick = {
+                AuthManager.cerrarSesion()
+                onLogout()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Cerrar Sesión")

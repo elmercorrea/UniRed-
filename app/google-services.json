@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "635346399226",
+    "project_id": "unired-fe8f2",
+    "storage_bucket": "unired-fe8f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635346399226:android:252ef39a2b343d4de1fe43",
+        "android_client_info": {
+          "package_name": "com.example.unired"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-6xkc42i0BNv9D42h-ScTyJbYtF4Yi3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

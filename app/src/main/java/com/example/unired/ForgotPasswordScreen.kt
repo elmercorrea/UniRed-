@@ -47,6 +47,7 @@ fun ForgotPasswordScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var isSubmitted by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val context = LocalContext.current
@@ -136,12 +137,24 @@ fun ForgotPasswordScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
+                    enabled = !isLoading,
                     onClick = {
                         if (email.isBlank() || !email.contains("@")) {
                             errorMessage = "Ingresa un correo institucional válido"
                         } else {
-                            isSubmitted = true
-                            Toast.makeText(context, "Instrucciones enviadas a $email", Toast.LENGTH_LONG).show()
+                            isLoading = true
+                            AuthManager.enviarRecuperacionContrasena(
+                                correo = email.trim(),
+                                onSuccess = {
+                                    isLoading = false
+                                    isSubmitted = true
+                                    Toast.makeText(context, "Instrucciones enviadas a $email", Toast.LENGTH_LONG).show()
+                                },
+                                onError = { err ->
+                                    isLoading = false
+                                    errorMessage = err
+                                }
+                            )
                         }
                     },
                     modifier = Modifier
@@ -150,7 +163,7 @@ fun ForgotPasswordScreen(
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Text(
-                        text = "Enviar Instrucciones",
+                        text = if (isLoading) "Enviando..." else "Enviar Instrucciones",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
