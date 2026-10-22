@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -49,7 +48,8 @@ import com.example.unired.ui.theme.UniRedTheme
 fun LoginScreen(
     onBackClick: () -> Unit,
     onForgotPasswordClick: () -> Unit,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    onCreateAccountClick: () -> Unit = {}
 ) {
     var emailOrUser by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -84,7 +84,7 @@ fun LoginScreen(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(110.dp)
-                    .clip(CircleShape)
+                    .clip(RoundedCornerShape(22.dp))
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -200,6 +200,27 @@ fun LoginScreen(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "¿No tienes una cuenta? ",
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                )
+                TextButton(onClick = onCreateAccountClick) {
+                    Text(
+                        text = "Crear cuenta",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -78,7 +77,7 @@ fun ForgotPasswordScreen(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(110.dp)
-                    .clip(CircleShape)
+                    .clip(RoundedCornerShape(22.dp))
             )
 
             Spacer(modifier = Modifier.height(20.dp))

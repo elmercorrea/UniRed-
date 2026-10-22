@@ -21,6 +21,7 @@ enum class AppScreen {
     Splash,
     Welcome,
     Login,
+    Register,
     ForgotPassword,
     Home
 }
@@ -54,7 +55,15 @@ fun MainContent() {
                     LoginScreen(
                         onBackClick = { currentScreen = AppScreen.Welcome },
                         onForgotPasswordClick = { currentScreen = AppScreen.ForgotPassword },
-                        onLoginSuccess = { currentScreen = AppScreen.Home }
+                        onLoginSuccess = { currentScreen = AppScreen.Home },
+                        onCreateAccountClick = { currentScreen = AppScreen.Register }
+                    )
+                }
+                AppScreen.Register -> {
+                    RegisterScreen(
+                        onBackClick = { currentScreen = AppScreen.Login },
+                        onRegisterSuccess = { currentScreen = AppScreen.Home },
+                        onLoginClick = { currentScreen = AppScreen.Login }
                     )
                 }
                 AppScreen.ForgotPassword -> {

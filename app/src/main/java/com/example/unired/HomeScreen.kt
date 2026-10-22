@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -41,7 +41,7 @@ fun HomeScreen(onLogout: () -> Unit) {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(120.dp)
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(24.dp))
         )
 
         Spacer(modifier = Modifier.height(24.dp))
