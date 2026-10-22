@@ -31,7 +31,7 @@ enum class AppScreen {
     ForgotPassword,
     Home,
     Configuracion,
-    CrearForo
+    CrearForo //
 }
 
 class MainActivity : ComponentActivity() {

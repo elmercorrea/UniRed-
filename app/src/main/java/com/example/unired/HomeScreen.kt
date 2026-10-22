@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.example.unired.ui.theme.UniRedTheme
 
 @Composable
-fun HomeScreen(
+fun HomeScreen( //
     onSettingsClick: () -> Unit = {},
     onCreatePostClick: () -> Unit = {},
     onAddStoryClick: () -> Unit = {}
