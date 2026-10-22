@@ -23,7 +23,8 @@ enum class AppScreen {
     Login,
     Register,
     ForgotPassword,
-    Home
+    Home,
+    Configuracion // 1. Se agregó la nueva pantalla al enum
 }
 
 class MainActivity : ComponentActivity() {
@@ -72,8 +73,15 @@ fun MainContent() {
                     )
                 }
                 AppScreen.Home -> {
+                    // 2. Se actualiza el parámetro para que coincida con HomeScreen y navegue a Configuración
                     HomeScreen(
-                        onLogout = { currentScreen = AppScreen.Welcome }
+                        onSettingsClick = { currentScreen = AppScreen.Configuracion }
+                    )
+                }
+                AppScreen.Configuracion -> {
+                    // 3. Se renderiza la pantalla de Configuración y se asigna el cierre de sesión
+                    ConfiguracionScreen(
+                        onLogoutClick = { currentScreen = AppScreen.Welcome }
                     )
                 }
             }
@@ -85,6 +93,6 @@ fun MainContent() {
 @Composable
 fun MainContentPreview() {
     UniRedTheme {
-        WelcomeScreen()
+        MainContent()
     }
 }
