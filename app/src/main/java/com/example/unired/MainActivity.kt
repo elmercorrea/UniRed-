@@ -31,7 +31,7 @@ enum class AppScreen {
     ForgotPassword,
     Home,
     Configuracion,
-    CrearForo //
+    CrearForo
 }
 
 class MainActivity : ComponentActivity() {
@@ -129,5 +129,13 @@ fun MainContent() {
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MainContentPreview() {
+    UniRedTheme {
+        MainContent()
     }
 }
