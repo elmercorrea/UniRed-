@@ -56,6 +56,7 @@ fun RegisterScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val context = LocalContext.current
@@ -212,16 +213,32 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
+                enabled = !isLoading,
                 onClick = {
                     if (fullName.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
                         errorMessage = "Por favor completa todos los campos"
                     } else if (!email.contains("@")) {
                         errorMessage = "Ingresa un correo institucional válido"
+                    } else if (password.length < 6) {
+                        errorMessage = "La contraseña debe tener al menos 6 caracteres"
                     } else if (password != confirmPassword) {
                         errorMessage = "Las contraseñas no coinciden"
                     } else {
-                        Toast.makeText(context, "¡Cuenta creada con éxito!", Toast.LENGTH_SHORT).show()
-                        onRegisterSuccess()
+                        isLoading = true
+                        AuthManager.registrarUsuario(
+                            nombre = fullName.trim(),
+                            correo = email.trim(),
+                            clave = password,
+                            onSuccess = {
+                                isLoading = false
+                                Toast.makeText(context, "¡Cuenta creada con éxito!", Toast.LENGTH_SHORT).show()
+                                onRegisterSuccess()
+                            },
+                            onError = { err ->
+                                isLoading = false
+                                errorMessage = err
+                            }
+                        )
                     }
                 },
                 modifier = Modifier
@@ -230,7 +247,7 @@ fun RegisterScreen(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
-                    text = "Crear Cuenta",
+                    text = if (isLoading) "Registrando..." else "Crear Cuenta",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )

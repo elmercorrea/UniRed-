@@ -54,6 +54,7 @@ fun LoginScreen(
     var emailOrUser by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var isLoading by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val context = LocalContext.current
@@ -182,12 +183,25 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
+                enabled = !isLoading,
                 onClick = {
                     if (emailOrUser.isBlank() || password.isBlank()) {
                         errorMessage = "Por favor completa todos los campos"
                     } else {
-                        Toast.makeText(context, "¡Sesión iniciada correctamente!", Toast.LENGTH_SHORT).show()
-                        onLoginSuccess()
+                        isLoading = true
+                        AuthManager.iniciarSesion(
+                            correo = emailOrUser.trim(),
+                            clave = password,
+                            onSuccess = {
+                                isLoading = false
+                                Toast.makeText(context, "¡Sesión iniciada correctamente!", Toast.LENGTH_SHORT).show()
+                                onLoginSuccess()
+                            },
+                            onError = { err ->
+                                isLoading = false
+                                errorMessage = err
+                            }
+                        )
                     }
                 },
                 modifier = Modifier
@@ -196,7 +210,7 @@ fun LoginScreen(
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text(
-                    text = "Iniciar Sesión",
+                    text = if (isLoading) "Iniciando..." else "Iniciar Sesión",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
