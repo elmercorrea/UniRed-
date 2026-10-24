@@ -40,6 +40,8 @@ import com.example.unired.ui.theme.UniRedTheme
 fun ConfiguracionScreen(
     onNotificationsClick: () -> Unit = {},
     onProfileClick: () -> Unit = {},
+    onPrivacidadClick: () -> Unit = {},
+    onAyudaSoporteClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     onHomeClick: () -> Unit = {}
 ) {
@@ -94,10 +96,10 @@ fun ConfiguracionScreen(
             ConfigMenuItem(text = "Notificaciones", onClick = onNotificationsClick)
             Spacer(modifier = Modifier.height(16.dp))
 
-            ConfigMenuItem(text = "Privacidad", onClick = { /*TODO*/ })
+            ConfigMenuItem(text = "Privacidad", onClick = onPrivacidadClick)
             Spacer(modifier = Modifier.height(16.dp))
 
-            ConfigMenuItem(text = "Ayuda Y Soporte", onClick = { /*TODO*/ })
+            ConfigMenuItem(text = "Ayuda Y Soporte", onClick = onAyudaSoporteClick)
 
             Spacer(modifier = Modifier.weight(1f))
 

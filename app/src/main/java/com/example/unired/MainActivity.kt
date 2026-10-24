@@ -33,6 +33,12 @@ enum class AppScreen {
     Notificaciones,
     Perfil,
     Configuracion,
+    Privacidad,
+    CuentaPrivada,
+    ConfigMensajes,
+    ConfigActividad,
+    AyudaSoporte,
+    ContactarSoporte,
     CrearForo
 }
 
@@ -134,12 +140,87 @@ fun MainContent() {
                 ConfiguracionScreen(
                     onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
                     onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onPrivacidadClick = { currentScreen = AppScreen.Privacidad },
+                    onAyudaSoporteClick = { currentScreen = AppScreen.AyudaSoporte },
                     onLogoutClick = {
                         // Borramos la sesión al salir
                         sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
                         currentScreen = AppScreen.Welcome
                     },
                     onHomeClick = { currentScreen = AppScreen.Home }
+                )
+            }
+            AppScreen.Privacidad -> {
+                PrivacidadScreen(
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion },
+                    onCuentaPrivadaClick = { currentScreen = AppScreen.CuentaPrivada },
+                    onConfigMensajesClick = { currentScreen = AppScreen.ConfigMensajes },
+                    onConfigActividadClick = { currentScreen = AppScreen.ConfigActividad }
+                )
+            }
+            AppScreen.CuentaPrivada -> {
+                val esPrivada = sharedPreferences.getBoolean("cuenta_privada", false)
+                OpcionSiNoScreen(
+                    titulo = "Cuenta Privada",
+                    descripcion = "Solo las personas que aceptes podrán seguirte y ver tus publicaciones.",
+                    estadoInicialSi = esPrivada,
+                    onCambioEstado = { sharedPreferences.edit().putBoolean("cuenta_privada", it).apply() },
+                    onVolverClick = { currentScreen = AppScreen.Privacidad },
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion }
+                )
+            }
+            AppScreen.ConfigMensajes -> {
+                val permMensajes = sharedPreferences.getBoolean("config_mensajes", true)
+                OpcionSiNoScreen(
+                    titulo = "Configuracion de Mensajes",
+                    descripcion = "Permite que otros estudiantes puedan enviarte mensajes.",
+                    estadoInicialSi = permMensajes,
+                    onCambioEstado = { sharedPreferences.edit().putBoolean("config_mensajes", it).apply() },
+                    onVolverClick = { currentScreen = AppScreen.Privacidad },
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion }
+                )
+            }
+            AppScreen.ConfigActividad -> {
+                val verActividad = sharedPreferences.getBoolean("config_actividad", true)
+                OpcionSiNoScreen(
+                    titulo = "Configuracion de Actividad",
+                    descripcion = "Permite que otros usuarios vean cuándo estás activo.",
+                    estadoInicialSi = verActividad,
+                    onCambioEstado = { sharedPreferences.edit().putBoolean("config_actividad", it).apply() },
+                    onVolverClick = { currentScreen = AppScreen.Privacidad },
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion }
+                )
+            }
+            AppScreen.AyudaSoporte -> {
+                AyudaSoporteScreen(
+                    onContactarSoporteClick = { currentScreen = AppScreen.ContactarSoporte },
+                    onVolverClick = { currentScreen = AppScreen.Configuracion },
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion }
+                )
+            }
+            AppScreen.ContactarSoporte -> {
+                ContactarSoporteScreen(
+                    onEnviarClick = { currentScreen = AppScreen.AyudaSoporte },
+                    onCancelarClick = { currentScreen = AppScreen.AyudaSoporte },
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion }
                 )
             }
             AppScreen.CrearForo -> {
