@@ -38,6 +38,8 @@ import com.example.unired.ui.theme.UniRedTheme
 
 @Composable
 fun ConfiguracionScreen(
+    onNotificationsClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {},
     onHomeClick: () -> Unit = {}
 ) {
@@ -65,14 +67,14 @@ fun ConfiguracionScreen(
             )
             Spacer(modifier = Modifier.weight(1f))
 
-            IconButton(onClick = { /* Acción notificaciones */ }) {
+            IconButton(onClick = onNotificationsClick) {
                 Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notificaciones", tint = Color.White)
             }
-            IconButton(onClick = { /* Acción perfil */ }) {
+            IconButton(onClick = onProfileClick) {
                 Icon(imageVector = Icons.Default.Person, contentDescription = "Perfil", tint = Color.White)
             }
             IconButton(onClick = { /* Acción configuración (ya estás aquí) */ }) {
-                Icon(imageVector = Icons.Default.Settings, contentDescription = "Configuración", tint = Color.White)
+                Icon(imageVector = Icons.Default.Settings, contentDescription = "Configuración", tint = Color(0xFF8B5CF6))
             }
         }
 
@@ -89,7 +91,7 @@ fun ConfiguracionScreen(
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
-            ConfigMenuItem(text = "Notificaciones", onClick = { /*TODO*/ })
+            ConfigMenuItem(text = "Notificaciones", onClick = onNotificationsClick)
             Spacer(modifier = Modifier.height(16.dp))
 
             ConfigMenuItem(text = "Privacidad", onClick = { /*TODO*/ })
@@ -147,5 +149,13 @@ fun ConfigMenuItem(text: String, onClick: () -> Unit) {
                 tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ConfiguracionScreenPreview() {
+    UniRedTheme {
+        ConfiguracionScreen()
     }
 }

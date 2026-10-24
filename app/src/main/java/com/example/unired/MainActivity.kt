@@ -30,6 +30,8 @@ enum class AppScreen {
     Register,
     ForgotPassword,
     Home,
+    Notificaciones,
+    Perfil,
     Configuracion,
     CrearForo
 }
@@ -103,13 +105,35 @@ fun MainContent() {
             }
             AppScreen.Home -> {
                 HomeScreen(
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
                     onSettingsClick = { currentScreen = AppScreen.Configuracion },
                     onCreatePostClick = { currentScreen = AppScreen.CrearForo },
                     onAddStoryClick = { /* Acción para historia */ }
                 )
             }
+            AppScreen.Notificaciones -> {
+                NotificacionesScreen(
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion }
+                )
+            }
+            AppScreen.Perfil -> {
+                PerfilScreen(
+                    onHomeClick = { currentScreen = AppScreen.Home },
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onSettingsClick = { currentScreen = AppScreen.Configuracion },
+                    onLogoutClick = {
+                        sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
+                        currentScreen = AppScreen.Welcome
+                    }
+                )
+            }
             AppScreen.Configuracion -> {
                 ConfiguracionScreen(
+                    onNotificationsClick = { currentScreen = AppScreen.Notificaciones },
+                    onProfileClick = { currentScreen = AppScreen.Perfil },
                     onLogoutClick = {
                         // Borramos la sesión al salir
                         sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()

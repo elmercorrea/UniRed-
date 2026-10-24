@@ -139,6 +139,32 @@ object AuthManager {
         return auth.currentUser
     }
 
+    fun obtenerPerfilUsuario(onResult: (nombre: String, correo: String, carrera: String) -> Unit) {
+        val usuario = auth.currentUser
+        if (usuario == null) {
+            onResult("Usuario", "", "Ingeniería de Software")
+            return
+        }
+
+        val nombreAuth = usuario.displayName.orEmpty()
+        val correoAuth = usuario.email.orEmpty()
+
+        db.collection(COLECCION_USUARIOS).document(usuario.uid).get()
+            .addOnSuccessListener { doc ->
+                val nombre = doc.getString("nombre")?.takeIf { it.isNotBlank() }
+                    ?: nombreAuth.ifBlank { "Usuario" }
+                val correo = doc.getString("correo")?.takeIf { it.isNotBlank() }
+                    ?: correoAuth
+                val carrera = doc.getString("carrera")?.takeIf { it.isNotBlank() }
+                    ?: "Ingeniería de Software"
+                onResult(nombre, correo, carrera)
+            }
+            .addOnFailureListener {
+                val nombre = nombreAuth.ifBlank { "Usuario" }
+                onResult(nombre, correoAuth, "Ingeniería de Software")
+            }
+    }
+
     private fun traducirError(error: Exception?): String = when (error) {
         is FirebaseAuthUserCollisionException -> "Este correo ya está registrado"
         is FirebaseAuthWeakPasswordException -> "La contraseña es muy débil (mínimo 6 caracteres)"

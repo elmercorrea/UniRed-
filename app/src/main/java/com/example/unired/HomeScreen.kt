@@ -47,6 +47,8 @@ import com.example.unired.ui.theme.UniRedTheme
 
 @Composable
 fun HomeScreen(
+    onNotificationsClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     onCreatePostClick: () -> Unit = {},
     onAddStoryClick: () -> Unit = {}
@@ -87,10 +89,10 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.weight(1f))
 
-                IconButton(onClick = { /* Acción notificaciones */ }) {
+                IconButton(onClick = onNotificationsClick) {
                     Icon(imageVector = Icons.Default.Notifications, contentDescription = "Notificaciones", tint = Color.White)
                 }
-                IconButton(onClick = { /* Acción perfil */ }) {
+                IconButton(onClick = onProfileClick) {
                     Icon(imageVector = Icons.Default.Person, contentDescription = "Perfil", tint = Color.White)
                 }
                 IconButton(onClick = onSettingsClick) {
